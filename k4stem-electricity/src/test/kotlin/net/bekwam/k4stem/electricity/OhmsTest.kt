@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
  * Class for testing Ohms functions
  *
  * @author carl
+ * @since 1.0
  */
 class OhmsTest {
 

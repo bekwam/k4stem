@@ -4,21 +4,21 @@ import java.lang.Math.pow
 import kotlin.math.sqrt
 
 /**
- * Class to model first-order Low Pass Filters
+ * Class to model first-order Low High Filters
  *
- * The Low Pass Filter weakens higher frequency signals.
+ * The High Pass Filter weakens lower frequency signals.
  *
- * A Low Pass Filter is a RC circuit with a resistor in series with a capacitor.  The
+ * A High Pass Filter is a RC circuit with a resistor in series with a capacitor.  The
  * capacitor resists the current as determined by frequency.  The circuit is a voltage
- * divider and the Vout is the voltage across the capacitor.
+ * divider and the Vout is the voltage across the resistor.
  *
  * Note that the positional arguments in the constructor differ from those in the
- * HighPassFilter
+ * LowPassFilter
  *
  * @author carl
  * @since 1.0
  */
-class LowPassFilter(val r : Double, val c : Double) {
+class HighPassFilter(val c : Double, val r : Double) {
 
     /**
      * vin should be in the desired units for vout (rms, pp, pk)
@@ -34,8 +34,10 @@ class LowPassFilter(val r : Double, val c : Double) {
         // i is the current
         val i = vin / z
 
-        return Triple(xc, i, i * xc)
+        return Triple(xc, i, i * r)
     }
 }
+
+
 
 

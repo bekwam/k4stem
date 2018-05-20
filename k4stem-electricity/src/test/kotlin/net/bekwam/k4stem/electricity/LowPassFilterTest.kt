@@ -27,11 +27,11 @@ class LowPassFilterTest {
 
         val df = DecimalFormat("#.######")
 
-        // i = 177mA
-        assertEquals( "0.000177", df.format(retval.second) )
+        // i = 167uA
+        assertEquals( "0.000167", df.format(retval.second) )
 
-        // vout = 587mV
-        assertEquals( "0.598693", df.format(retval.third) )
+        // vout = 567mV
+        assertEquals( "0.567063", df.format(retval.third) )
     }
 
     @Test
@@ -42,6 +42,6 @@ class LowPassFilterTest {
         val retval = lpf.vout( 1.768, 10_000.0 ) // increased f, more reactance, smaller vout
 
         val df = DecimalFormat("#.######")
-        assertEquals( "0.059869", df.format(retval.third) )
+        assertEquals( "0.059835", df.format(retval.third) )
     }
 }

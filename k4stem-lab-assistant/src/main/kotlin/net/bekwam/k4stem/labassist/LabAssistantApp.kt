@@ -30,7 +30,8 @@ class MainView : View("K4Stem Lab Assistant") {
                                 return "K4Stem Lab Assistant"
                             }
                         }
-                        title = "${fileNamer(file[0])}"
+                        if(file.size > 0) {title = "${fileNamer(file[0])}"}
+                        else{title = "K4Stem Lab Assistant"}
                     }
                 }
                     menu("Open Recent") {}

@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "labName": "My Lab",
+  "labOwner": "Carl",
+  "inventory": [{
+    "lastChanged": "2018-06-03T10:15:30+01:00 America/Los Angeles"
+  }]
+}

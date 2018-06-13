@@ -17,10 +17,23 @@
             <artifactId>tornadofx</artifactId>
             <version>${tornadofx.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>klaxon</artifactId>
+            <version>${klaxon.version}</version>
+        </dependency>
     </dependencies>
 
     <properties>
         <tornadofx.version>1.7.16</tornadofx.version>
+        <klaxon.version>3.0.1</klaxon.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <url>https://jcenter.bintray.com/</url>
+        </repository>
+    </repositories>
 
 </project>

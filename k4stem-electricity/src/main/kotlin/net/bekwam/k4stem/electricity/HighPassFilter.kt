@@ -21,20 +21,17 @@ import kotlin.math.sqrt
 class HighPassFilter(val c : Double, val r : Double) {
 
     /**
-     * vin should be in the desired units for vout (rms, pp, pk)
+     * voltage_input should be in the desired units for voltage_output (rms, pp, pk)
      */
-    fun vout(vin : Double, f : Double) : Triple<Double, Double, Double> {
+    fun voltage_output(voltage_input : Double, f : Double) : Triple<Double, Double, Double> {
 
-        // xc is the reactance
-        val xc = 1.0 / (2.0 * Math.PI * f * c)
+        val reactance = 1.0 / (2.0 * Math.PI * f * c)
 
-        // z is the impedance
-        val z = sqrt( pow(r, 2.0) + pow(xc, 2.0) )
+        val impedance = sqrt( pow(r, 2.0) + pow(reactance, 2.0) )
 
-        // i is the current
-        val i = vin / z
+        val current = voltage_input / impedance
 
-        return Triple(xc, i, i * r)
+        return Triple(reactance, current, current * r)
     }
 }
 

@@ -7,20 +7,14 @@ package net.bekwam.k4stem.electricity
  * @since 1.0
  */
 
-/**
- * p = i * v
- * @ param i - current
- * @ param v - voltage
- */
-fun power(i : Double, v : Double) : Double {
-    return i * v
-}
+class Power {
+    // (p = i * v) where i = current, v = voltage
+    fun power(current : Double, voltage : Double) : Double {
+        return current * voltage
+    }
 
-/**
- * P = (i)^2 *r
- * @ param i - current
- * @ param r - resistance
- */
-fun powerFromResistance(i :Double, r : Double) : Double {
-    return i * voltage(i, r)
+    // (P = (i)^2 *r) where i = current, r = resistance
+    fun powerFromResistance(current :Double, resistance : Double) : Double {
+        return current * power(current, resistance)
+    }
 }

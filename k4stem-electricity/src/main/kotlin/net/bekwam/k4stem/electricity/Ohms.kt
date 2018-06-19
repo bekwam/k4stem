@@ -7,55 +7,46 @@ package net.bekwam.k4stem.electricity
  * @since 1.0
  */
 
-/**
- * V = IR
- *
- * @param i - current
- * @param r - resistance; must be >=0.0
- * @throws IllegalArgumentException if r <0.0
- */
-fun voltage(i : Double, r : Double) : Double {
 
-    if( r < 0.0 )
-        throw IllegalArgumentException("resistance must be positive")
+class Ohms {
 
-    return i * r
-}
+    /**
+     * V = IR where resistance must be >= 0.0
+     */
+    @Throws(IllegalArgumentException::class)
+    fun voltage(current : Double, resistance : Double) : Double{
 
-/**
- * I = V/R
- *
- * Will return infinite current (POSITIVE_INFINITY constant) if
- * no resistance (r=0.0)
- *
- * @param v - voltage
- * @param r - resistance; must be >=0.0
- * @throws IllegalArgumentException if r <0.0
- */
-fun current(v : Double, r : Double) : Double {
+        if (resistance < 0.0)
+            throw IllegalArgumentException("resistance must be positive")
 
-    if( r < 0.0 )
-        throw IllegalArgumentException("resistance must be positive")
+        return current * resistance
+    }
 
-    if( r == 0.0 )
-        return Double.POSITIVE_INFINITY // infinite current
+    /**
+     * I = V/R where resistance must be >= 0.0
+     *
+     * Will return infinite current (POSITIVE_INFINITY constant) if
+     * no resistance (r = 0.0)
+     */
+    @Throws(IllegalArgumentException::class)
+    fun current(voltage : Double, resistance : Double) : Double {
 
-    return v / r
-}
+        if (resistance < 0.0)
+            throw IllegalArgumentException("resistance must be positive")
 
-/**
- * R = V/I
- *
- * Will return infinite resistance (POSITIVE_INFINITY constant) if
- * no current (i=0.0)
- *
- * @param v - voltage
- * @param i - current
- */
-fun resistance( v : Double, i : Double ) : Double {
+        return if (resistance == 0.0) Double.POSITIVE_INFINITY else (voltage / resistance)
+    }
 
-    if (i == 0.0)
-        return Double.POSITIVE_INFINITY // infinite resistance
+    /**
+     * R = V/I
+     *
+     * Will return infinite resistance (POSITIVE_INFINITY constant) if
+     * no current (i = 0.0)
+     */
+    fun resistance(voltage : Double, current : Double ) : Double {
 
-    return v / i
+        return if (current == 0.0) Double.POSITIVE_INFINITY else (voltage / current)
+
+    }
+
 }

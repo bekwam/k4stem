@@ -20,7 +20,7 @@ class HighPassFilterTest {
         val hpf = HighPassFilter(0.000000047, 9900.0 )
 
         // sine wave w. vin=1.768Vrms, 100Hz
-        val retval = hpf.vout( 1.768, 100.0 )
+        val retval = hpf.voltage_output( 1.768, 100.0 )
 
         // xc = 33.86kOhms
         assertEquals( 33863, retval.first.roundToInt() )

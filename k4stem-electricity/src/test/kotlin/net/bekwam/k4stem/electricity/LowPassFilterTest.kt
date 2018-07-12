@@ -20,7 +20,7 @@ class LowPassFilterTest {
         val lpf = LowPassFilter(10_000.0, 0.000000047 )
 
         // sine wave w. vin=1.768Vrms, 1kHz
-        val retval = lpf.vout( 1.768, 1_000.0 )
+        val retval = lpf.voltage_output( 1.768, 1_000.0 )
 
         // xc = 3.386kOhms
         assertEquals( 3386, retval.first.roundToInt() )
@@ -39,7 +39,7 @@ class LowPassFilterTest {
 
         val lpf = LowPassFilter(10_000.0, 0.000000047 )
 
-        val retval = lpf.vout( 1.768, 10_000.0 ) // increased f, more reactance, smaller vout
+        val retval = lpf.voltage_output( 1.768, 10_000.0 ) // increased f, more reactance, smaller vout
 
         val df = DecimalFormat("#.######")
         assertEquals( "0.059835", df.format(retval.third) )

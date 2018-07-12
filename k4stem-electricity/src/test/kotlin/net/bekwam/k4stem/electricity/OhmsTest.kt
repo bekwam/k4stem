@@ -15,35 +15,35 @@ class OhmsTest {
     @Test
     fun calcVoltage() {
         // 5mA * 1kOhm = 5V
-        assertEquals( 5.0, voltage(0.005, 1000.0 ) )
+        assertEquals( 5.0, Ohms().voltage(0.005, 1000.0 ) )
     }
 
     @Test
     fun negativeResistanceError() {
-        assertThrows( IllegalArgumentException::class.java, { voltage( 0.005, -1000.0 ) })
-        assertThrows( IllegalArgumentException::class.java, { current( 5.0, -1000.0 ) })
+        assertThrows( IllegalArgumentException::class.java, { Ohms().voltage( 0.005, -1000.0 ) })
+        assertThrows( IllegalArgumentException::class.java, { Ohms().current( 5.0, -1000.0 ) })
     }
 
     @Test
     fun calcCurrent() {
         // 5V / 1kOhm = 5mA
-        assertEquals( 0.005, current(5.0, 1000.0))
+        assertEquals( 0.005, Ohms().current(5.0, 1000.0))
     }
 
     @Test
     fun infiniteCurrent() {
-        assertEquals( Double.POSITIVE_INFINITY, current(5.0, 0.0))
+        assertEquals( Double.POSITIVE_INFINITY, Ohms().current(5.0, 0.0))
     }
 
     @Test
     fun calcResistance() {
         // 5V / 5mA = 1kOhm
-        assertEquals( 1000.0, resistance(5.0, 0.005))
+        assertEquals( 1000.0, Ohms().resistance(5.0, 0.005))
     }
 
     @Test
     fun infiniteResistance() {
-        assertEquals( Double.POSITIVE_INFINITY, resistance(5.0, 0.0))
+        assertEquals( Double.POSITIVE_INFINITY, Ohms().resistance(5.0, 0.0))
     }
 
 }

@@ -1,5 +1,6 @@
 package net.bekwam.k4stem.electricity
 
+import com.sun.org.apache.xalan.internal.lib.ExsltMath.power
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
@@ -20,12 +21,12 @@ class PowerTest {
 
     @Test
     fun calcPowerFromResistance(){
-        assertEquals(100.0, powerFromResistance(10.0, 1.0))
+        assertEquals(100.0, Power().powerFromResistance(10.0, 1.0))
     }
 
     @Test
     fun negativeResistanceError() {
-        assertThrows( IllegalArgumentException::class.java, { powerFromResistance( 0.005, -1000.0 ) })
+        assertThrows( IllegalArgumentException::class.java, { Power().powerFromResistance( 0.005, -1000.0 ) })
     }
 
 }

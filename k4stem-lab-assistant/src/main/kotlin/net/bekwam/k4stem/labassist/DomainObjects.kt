@@ -7,6 +7,7 @@ import javafx.beans.property.*
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import tornadofx.*
+import java.io.File
 
 data class Lab (var version : Int,
            var labName  : String,
@@ -43,6 +44,7 @@ class ComponentController : Controller(){
     var itemsList = observableList<Component>()
     var lab: Lab? =null
     val dirtyFlag = SimpleBooleanProperty()
+    var file: File? = null
 
     fun delete(c  : Component){
         itemsList.remove(c)

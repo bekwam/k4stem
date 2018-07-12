@@ -1,9 +1,8 @@
 package net.bekwam.k4stem.labassist
 
 
-import com.beust.klaxon.Klaxon
-import javafx.application.Platform
-import javafx.beans.property.*
+import javafx.beans.property.SimpleObjectProperty
+import javafx.beans.property.SimpleStringProperty
 import javafx.event.EventHandler
 import javafx.geometry.Insets
 import javafx.geometry.Pos
@@ -12,9 +11,7 @@ import javafx.scene.control.TableView
 import javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY
 import javafx.scene.layout.Priority
 import javafx.scene.paint.Color
-import javafx.stage.FileChooser
 import tornadofx.*
-import java.io.File
 import java.time.ZonedDateTime
 
 
@@ -24,8 +21,8 @@ An inventory management app for an electronics lab
 
  **************************************************/
 
+
 class MainView : View("K4Stem Lab Assistant") {
-    var file: File? = null
     val lastChangedDate = SimpleObjectProperty<ZonedDateTime>()
     var tblItems: TableView<Component> by singleAssign()
     val keywords = SimpleStringProperty()
@@ -33,133 +30,8 @@ class MainView : View("K4Stem Lab Assistant") {
     val CVctrl : ComponentViewController by inject()
 
 
-
-
     override val root = vbox {
-        menubar {
-            menu("File") {
-                item("New") {
-                    action {
-                        file = createTempFile("tempFile", ".json")
-                        ctrl.dirtyFlag.set(true)
-                        find<AddLabView>().openModal()
-
-                    }
-                }
-                item("Open") {
-                    action {
-                        val filterFiles = arrayOf(FileChooser.ExtensionFilter("Files", "*.json"))
-                        val files = chooseFile("Select File", filterFiles, FileChooserMode.Single)
-                        fun fileNamer(file: File?): String {
-                            if (file != null) {
-                                return "K4Stem Lab Assistant - $file"
-                            } else {
-                                return "K4Stem Lab Assistant"
-                            }
-                        }
-                        if (files.size > 0) {
-                            try {
-                                file = files[0]
-                                val contents = files[0].readText()
-                                ctrl.lab = Klaxon()
-                                        .fieldConverter(LabAssistantDefaultDate::class, zdtConverter)
-                                        .fieldConverter(LabAssistantDefaultPrice::class, bdConverter)
-                                        .parse<Lab>(contents)
-                            } catch (exc: Exception) {
-                                alert(Alert.AlertType.ERROR, exc.message!!)
-                            }
-
-
-                            title = "${fileNamer(files[0])}"
-                            ctrl.dirtyFlag.set(true)
-
-                        } else {
-                            title = "K4Stem Lab Assistant"
-                        }
-                    }
-                }
-                menu("Open Recent") {
-                    action{
-                        val aaa = FileChooser()
-                        aaa.showOpenDialog(primaryStage)
-                    }
-                }
-
-                item("Close") {
-                    action {
-
-                        file = null
-                        ctrl.dirtyFlag.set(false)
-
-                        title = "K4Stem Lab Assistant"
-                        ctrl.lab = null
-                    }
-                }
-                separator()
-                item("save") {
-                    action {
-                        if (ctrl.lab != null) {
-                            if (ctrl.dirtyFlag.value == true && file != null) {
-                                val newFile = Klaxon()
-                                        .fieldConverter(LabAssistantDefaultDate::class, zdtConverter)
-                                        .fieldConverter(LabAssistantDefaultPrice::class, bdConverter)
-                                        .toJsonString(ctrl.lab!!)
-                                file!!.writeText(newFile)
-                                ctrl.dirtyFlag.set(false)
-                            } else {
-                                alert(Alert.AlertType.CONFIRMATION, "save flag worked")
-                            }
-                        }
-                    }
-                }
-                item("Save As") {
-                    action {
-                        if (ctrl.dirtyFlag.value == true && file != null) {
-                            val fc = FileChooser()
-                            val newFileJsonString = Klaxon()
-                                    .fieldConverter(LabAssistantDefaultDate::class, zdtConverter)
-                                    .fieldConverter(LabAssistantDefaultPrice::class, bdConverter)
-                                    .toJsonString(ctrl.lab!!)
-                            val extFilt = FileChooser.ExtensionFilter("json", "*.json")
-                            fc.extensionFilters.add(extFilt)
-                            fc.showSaveDialog(primaryStage).writeText(newFileJsonString)
-                            ctrl.dirtyFlag.set(false)
-                        }
-
-                    }
-                }
-                separator()
-                item("Preferences")
-                separator()
-                item("Exit") {
-                    action {
-                        if (ctrl.dirtyFlag.value) {
-                            confirm("You Have Unsaved Files",
-                                    "Do you wish to proceed?")
-                            { Platform.exit() }
-
-                        }
-                    }
-
-                }
-            }
-
-
-            menu("Edit") {
-                item("Cut")
-                item("Copy")
-                item("Paste")
-            }
-            menu("View")
-            menu("Help") {
-                item("Wiki") {
-                    action {
-                        hostServices.showDocument("https://github.com/bekwam/k4stem/wiki")
-                    }
-                }
-                item("About")
-            }
-        }
+        add( find<MenuFragment>() )
         vbox {
             hbox {
                 hbox {

@@ -4,6 +4,8 @@ import com.beust.klaxon.Converter
 import com.beust.klaxon.JsonValue
 import com.beust.klaxon.KlaxonException
 import javafx.beans.property.*
+import javafx.scene.control.Alert
+import javafx.scene.control.TableView
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import tornadofx.*
@@ -45,12 +47,28 @@ class ComponentController : Controller(){
     var lab: Lab? =null
     val dirtyFlag = SimpleBooleanProperty()
     var file: File? = null
+    val keywords = SimpleStringProperty()
+    var tblItems: TableView<Component> by singleAssign()
 
     fun delete(c  : Component){
         itemsList.remove(c)
         lab!!.inventory[0].components.remove(c)
 
     }
+    fun refreshFromModel() {
+        if(lab!=null) {
+            itemsList.clear()
+            for (inv in lab!!.inventory) {
+                for (comp in inv!!.components) {
+                    itemsList.add(Component(comp.name, comp.description, comp.source, comp.componentType, comp.numOnHand, comp.price, comp.modelNumber, comp.valueComp))
+                }
+            }
+        }
+        else {
+            alert(Alert.AlertType.INFORMATION, "No New Information")
+        }
+    }
+
 }
 @Target (AnnotationTarget.FIELD)
 annotation class LabAssistantDefaultPrice

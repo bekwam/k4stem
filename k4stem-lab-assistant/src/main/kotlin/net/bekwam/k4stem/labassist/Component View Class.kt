@@ -36,12 +36,29 @@ class ComponentView : View() {
                     spacing = 10.0
                 }
                 hbox {
-                    field("Quantity:") { textfield(ctrl.numInput) {style{backgroundColor = multi(Color.LIGHTGOLDENRODYELLOW) }} }
+                    field("Quantity:") {
+                        textfield(ctrl.numInput) {
+                            style { backgroundColor = multi(Color.LIGHTGOLDENRODYELLOW) }
+                            filterInput {
+                                it.controlNewText.isDouble()
+                            }
+                        }
+
+
+                    }
                     padding = insets(10)
                     spacing = 10.0
                 }
                 hbox {
-                    field("Price:") { textfield(ctrl.editingPrice) {style{backgroundColor = multi(Color.LIGHTGOLDENRODYELLOW) }} }
+                    field("Price:") {
+                        textfield(ctrl.editingPrice)
+                        {
+                            style { backgroundColor = multi(Color.LIGHTGOLDENRODYELLOW) }
+                            filterInput {
+                                it.controlNewText.isDouble()
+                            }
+                        }
+                    }
                     padding = insets(10)
                     spacing = 10.0
                 }
@@ -51,49 +68,54 @@ class ComponentView : View() {
                     spacing = 10.0
                 }
                 hbox {
-                    field("Value:") { textfield(ctrl.valInput){style{backgroundColor = multi(Color.LIGHTGOLDENRODYELLOW) }}}
+                    field("Value:") { textfield(ctrl.valInput)
+                    {style{backgroundColor = multi(Color.LIGHTGOLDENRODYELLOW) }
+                        filterInput {
+                            it.controlNewText.isDouble()
+                        }
+                    }
+                    }
                     padding = insets(10)
                     spacing = 10.0
                 }
                 separator()
                 hbox{
                     button("Save"){
-                        action{
-                            ctrl.newComp=(Component(
-                                    ctrl.nameInput.value,
-                                    ctrl.descInput.value,
-                                    ctrl.sourceInput.value,
-                                    ctrl.cpInput.value,
-                                    ctrl.numInput.value,
-                                    ctrl.editingPrice.value.toBigDecimal(),
-                                    ctrl.mnInput.value,
-                                    ctrl.valInput.value
-                            )
+                        action {
+                            if (ctrl.nameInput.value != null && ctrl.descInput.value != null && ctrl.sourceInput.value != null && ctrl.cpInput.value != null && ctrl.mnInput.value != null) {
+                                ctrl.newComp = (Component(
+                                        ctrl.nameInput.value,
+                                        ctrl.descInput.value,
+                                        ctrl.sourceInput.value,
+                                        ctrl.cpInput.value,
+                                        ctrl.numInput.value,
+                                        ctrl.editingPrice.value.toBigDecimal(),
+                                        ctrl.mnInput.value,
+                                        ctrl.valInput.value
+                                )
 
-                                    )
-                            if(ctrl.compctrl.lab != null) {
-                                if(ctrl.itemFlag.value == false) {
-                                    ctrl.compctrl.lab!!.inventory[0].components.add(ctrl.newComp!!)
-                                    ctrl.resetInputs()
-                                    modalStage!!.close()
-                                }
-                                else if(ctrl.itemFlag.value){
-                                    if(ctrl.indOfC != null) {
-                                        ctrl.compctrl.lab!!.inventory[0].components[ctrl.indOfC!!] = ctrl.newComp!!
+                                        )
+                                if (ctrl.compctrl.lab != null) {
+                                    if (ctrl.itemFlag.value == false) {
+                                        ctrl.compctrl.lab!!.inventory[0].components.add(ctrl.newComp!!)
                                         ctrl.resetInputs()
                                         modalStage!!.close()
+                                    } else if (ctrl.itemFlag.value) {
+                                        if (ctrl.indOfC != null) {
+                                            ctrl.compctrl.lab!!.inventory[0].components[ctrl.indOfC!!] = ctrl.newComp!!
+                                            ctrl.resetInputs()
+                                            modalStage!!.close()
+                                        }
                                     }
+                                } else if (ctrl.compctrl.lab == null && AddLabView().newLab != null) {
+                                    AddLabView().newLab!!.inventory[0].components.add(ctrl.newComp!!)
+                                    ctrl.resetInputs()
+                                    modalStage!!.close()
+                                } else {
+                                    alert(Alert.AlertType.INFORMATION, "Something happend")
                                 }
-                            }
-                            else if(ctrl.compctrl.lab == null && AddLabView().newLab != null){
-                                AddLabView().newLab!!.inventory[0].components.add(ctrl.newComp!!)
-                                ctrl.resetInputs()
-                                modalStage!!.close()
-                            }
-                      else{
-                                alert(Alert.AlertType.INFORMATION,"Something happend")
-                            }
 
+                            }
                         }
                         style{
                             backgroundColor = multi(Color.LIGHTGOLDENRODYELLOW)

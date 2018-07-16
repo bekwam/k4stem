@@ -6,15 +6,15 @@ import java.math.BigDecimal
 
 class ComponentViewController : Controller(){
 
-    val nameInput = SimpleStringProperty()
-    val descInput = SimpleStringProperty()
-    val sourceInput = SimpleStringProperty()
-    val cpInput = SimpleObjectProperty<ComponentType>()
-    val numInput = SimpleIntegerProperty()
-    val priceInput = SimpleObjectProperty<BigDecimal>()
-    val editingPrice = SimpleStringProperty()
-    val mnInput = SimpleStringProperty()
-    val valInput = SimpleDoubleProperty()
+    val nameInput = SimpleStringProperty(null)
+    val descInput = SimpleStringProperty(null)
+    val sourceInput = SimpleStringProperty(null)
+    val cpInput = SimpleObjectProperty<ComponentType>(null)
+    val numInput = SimpleIntegerProperty(0)
+    val priceInput = SimpleObjectProperty<BigDecimal>(null)
+    val editingPrice = SimpleStringProperty("0.0")
+    val mnInput = SimpleStringProperty(null)
+    val valInput = SimpleDoubleProperty(0.0)
     var newComp : Component? = null
     val compctrl : ComponentController by inject()
     val itemFlag = SimpleBooleanProperty()

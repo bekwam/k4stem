@@ -6,7 +6,7 @@ import tornadofx.*
 class RefreshButtonView : Fragment(){
     val ctrl : ComponentController by inject()
     override val root = hbox {
-        button("refresh table") {
+        button("Refresh Table") {
             action {
                 ctrl.refreshFromModel()
             }

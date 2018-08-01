@@ -1,5 +1,7 @@
 package net.bekwam.k4stem.labassist
 import javafx.beans.property.SimpleStringProperty
+import javafx.scene.paint.Color
+import javafx.scene.text.Font
 import java.time.ZonedDateTime
 import tornadofx.*
 class AddLabView : View(){
@@ -14,7 +16,7 @@ class AddLabView : View(){
                field("Lab Name:"){textfield(labNameInput)}
             }
             hbox{
-                field("Lab Owner Name"){textfield(ownerNameInput)}
+                field("Lab Owner Name:"){textfield(ownerNameInput)}
             }
             separator()
             hbox{
@@ -33,13 +35,19 @@ class AddLabView : View(){
                             )
                             find<ComponentView>().openModal()
                             modalStage!!.close()
-                            ctrl.lab = newLab
+                            ctrl.lab.value = newLab
                         }
                     }
                 }
 
             }
         }
+        style{
+            backgroundColor+= Color.POWDERBLUE
+            font = Font.font("Verdana")
+            fontSize = 24.px
+        }
+        addClass(Styles.normalStyle)
 
     }
 }

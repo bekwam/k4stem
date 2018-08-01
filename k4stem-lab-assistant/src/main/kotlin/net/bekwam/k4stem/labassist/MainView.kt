@@ -24,12 +24,14 @@ An inventory management app for an electronics lab
 
 class MainView : View("K4Stem Lab Assistant") {
     val lastChangedDate = SimpleObjectProperty<ZonedDateTime>()
-
+    val status : TaskStatus by inject()
     val ctrl : ComponentController by inject()
     val CVctrl : ComponentViewController by inject()
 
 
+
     override val root = vbox {
+        addClass(Styles.normalStyle)
         add( find<MenuFragment>() )
         vbox {
             hbox {
@@ -58,7 +60,7 @@ class MainView : View("K4Stem Lab Assistant") {
             hbox {
                 add(find<AddSubtractButtonView>())
             }
-            ctrl.tblItems = tableview(ctrl.itemsList) {
+            ctrl.tblItems = tableview(ctrl.itemsList){
                 column("Name", Component::nameProp)
                 column("Description", Component::descProp)
                 column("Source", Component::sourceProp)
@@ -77,8 +79,8 @@ class MainView : View("K4Stem Lab Assistant") {
                             CVctrl.editCompoment(itemToEdit)
                         }
                     }
+                    }
 
-                }
 
                 prefWidth = 667.0
                 prefHeight = 376.0
@@ -86,13 +88,20 @@ class MainView : View("K4Stem Lab Assistant") {
                 vboxConstraints {
                     vGrow = Priority.ALWAYS
                 }
-                addClass(Styles.tableStyle)
+            }
+            hbox {
+                add(find<RefreshButtonView>())
+                spacing = 10.0
+                hbox (4.0){
+                    progressbar(status.progress)
+                    label(status.message)
+                    visibleWhen { status.running }
+                    alignment = Pos.CENTER_LEFT
 
-
-
+                }
 
             }
-            add(find<RefreshButtonView>())
+
 
             vboxConstraints {
                 vGrow = Priority.ALWAYS
@@ -102,7 +111,7 @@ class MainView : View("K4Stem Lab Assistant") {
 
         }
         style{
-            backgroundColor= multi(Color.BURLYWOOD,Color.SIENNA)
+            backgroundColor += Color.POWDERBLUE
         }
     }
 

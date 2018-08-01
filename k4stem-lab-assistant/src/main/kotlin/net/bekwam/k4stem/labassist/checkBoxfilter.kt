@@ -10,6 +10,3 @@ val potCheck = SimpleBooleanProperty()
 val transCheck = SimpleBooleanProperty()
 val indCheck = SimpleBooleanProperty()
 val allCheck = SimpleBooleanProperty()
-
-//filter input
-//validation,

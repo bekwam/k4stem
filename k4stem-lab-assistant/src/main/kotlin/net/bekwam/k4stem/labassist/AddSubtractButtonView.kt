@@ -11,7 +11,7 @@ class AddSubtractButtonView : Fragment(){
     override val root =hbox{
         button("+"){
             action {
-                if(ctrl.lab!=null) {
+                if(ctrl.lab.value!=null) {
                     CVctrl.itemFlag.set(false)
                     CVctrl.resetInputs()
                     find<ComponentView>(params= mapOf("a" to "b")).openWindow()

@@ -13,7 +13,7 @@ class TilePaneFragment : Fragment() {
         checkbox("Transistor", transCheck)
         checkbox("Check All", allCheck)
         prefColumns = 2
-        prefTileWidth = 150.0
+        prefTileWidth = 225.0
         tileAlignment = Pos.CENTER_LEFT
         vgap = 4.0
         hgap = 2.0

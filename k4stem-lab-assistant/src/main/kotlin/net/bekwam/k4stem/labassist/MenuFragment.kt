@@ -21,7 +21,7 @@ class MenuFragment : Fragment() {
         menu("File") {
             item("New") {
                 action {
-                    ctrl.file = createTempFile("tempFile", ".json")
+                    ctrl.file.value = createTempFile("tempFile", ".json")
                     ctrl.dirtyFlag.set(true)
                     find<AddLabView>().openModal()
 
@@ -29,36 +29,25 @@ class MenuFragment : Fragment() {
             }
             item("Open") {
                 action {
-                    val filterFiles = arrayOf(FileChooser.ExtensionFilter("Files", "*.json"))
-                    val files = chooseFile("Select File", filterFiles, FileChooserMode.Single)
-                    fun fileNamer(file: File?): String {
-                        if (file != null) {
-                            return "K4Stem Lab Assistant - $file"
-                        } else {
-                            return "K4Stem Lab Assistant"
-                        }
+                    val fl = ctrl.fileSelection()
+                    ctrl.file.value = fl[0]
+                    val f = ctrl.file.value
+                    runAsync {
+                        updateMessage("Loading Components...")
+                        updateProgress(0.4, 1.0)
+                       var f2 = ctrl.readFile(f)
+                        ctrl.parse(f2)
+                    } ui {
+                        ctrl.dirtyFlag.value = true
+                        ctrl.refreshFromModel()
+                    } fail{
+                       alert(Alert.AlertType.ERROR,"Error loading file:",it.message)
                     }
-                    if (files.size > 0) {
-                        try {
-                            ctrl.file = files[0]
-                            val contents = files[0].readText()
-                            ctrl.lab = Klaxon()
-                                    .fieldConverter(LabAssistantDefaultDate::class, zdtConverter)
-                                    .fieldConverter(LabAssistantDefaultPrice::class, bdConverter)
-                                    .parse<Lab>(contents)
-                        } catch (exc: Exception) {
-                            alert(Alert.AlertType.ERROR, exc.message!!)
-                        }
 
-
-                        title = "${fileNamer(files[0])}"
-                        ctrl.dirtyFlag.set(true)
-
-                    } else {
-                        title = "K4Stem Lab Assistant"
-                    }
                 }
             }
+
+
             menu("Open Recent") {
                 action{
                     val aaa = FileChooser()
@@ -69,11 +58,11 @@ class MenuFragment : Fragment() {
             item("Close") {
                 action {
 
-                    ctrl.file = null
+                    ctrl.file.value = null
                     ctrl.dirtyFlag.set(false)
 
                     title = "K4Stem Lab Assistant"
-                    ctrl.lab = null
+                    ctrl.lab.value = null
                 }
             }
             separator()
@@ -85,7 +74,7 @@ class MenuFragment : Fragment() {
                                     .fieldConverter(LabAssistantDefaultDate::class, zdtConverter)
                                     .fieldConverter(LabAssistantDefaultPrice::class, bdConverter)
                                     .toJsonString(ctrl.lab!!)
-                            ctrl.file!!.writeText(newFile)
+                            ctrl.file.value!!.writeText(newFile)
                             ctrl.dirtyFlag.set(false)
                         } else {
                             alert(Alert.AlertType.CONFIRMATION, "save flag worked")

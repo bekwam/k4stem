@@ -12,6 +12,7 @@ import java.math.BigDecimal
 
 class ComponentView : View() {
     val ctrl : ComponentViewController by inject()
+    val cl : ComponentController by inject()
 
     override val root = vbox {
         form {
@@ -81,22 +82,21 @@ class ComponentView : View() {
                 hbox{
                     button("Save"){
                         action {
-                            if (ctrl.nameInput.value != null && ctrl.descInput.value != null && ctrl.sourceInput.value != null && ctrl.cpInput.value != null && ctrl.mnInput.value != null) {
                                 ctrl.newComp = (Component(
-                                        ctrl.nameInput.value,
-                                        ctrl.descInput.value,
-                                        ctrl.sourceInput.value,
-                                        ctrl.cpInput.value,
+                                        if(ctrl.nameInput.value != null){ctrl.nameInput.value} else{"Unspecified"},
+                                       if(ctrl.descInput.value!= null){ctrl.descInput.value}else{"Unspecified"},
+                                        if(ctrl.sourceInput.value != null){ctrl.sourceInput.value}else{"Unspecified"} ,
+                                        if(ctrl.cpInput.value != null){ctrl.cpInput.value} else{ComponentType.UNSPECIFIED},
                                         ctrl.numInput.value,
                                         ctrl.editingPrice.value.toBigDecimal(),
-                                        ctrl.mnInput.value,
+                                        if(ctrl.mnInput.value!=null){ctrl.mnInput.value}else{"Unspecified"},
                                         ctrl.valInput.value
                                 )
 
                                         )
-                                if (ctrl.compctrl.lab != null) {
+                                if (ctrl.compctrl.lab.value != null) {
                                     if (ctrl.itemFlag.value == false) {
-                                        ctrl.compctrl.lab!!.value.inventory[0].components.add(ctrl.newComp!!)
+                                        ctrl.compctrl.lab.value.inventory[0].components.add(ctrl.newComp!!)
                                         ctrl.resetInputs()
                                         modalStage!!.close()
                                     } else if (ctrl.itemFlag.value) {
@@ -106,15 +106,21 @@ class ComponentView : View() {
                                             modalStage!!.close()
                                         }
                                     }
-                                } else if (ctrl.compctrl.lab == null && AddLabView().newLab != null) {
+                                } else if (ctrl.compctrl.lab.value == null && AddLabView().newLab != null) {
                                     AddLabView().newLab!!.inventory[0].components.add(ctrl.newComp!!)
                                     ctrl.resetInputs()
                                     modalStage!!.close()
                                 } else {
-                                    alert(Alert.AlertType.INFORMATION, "Something happend")
+                                    alert(Alert.AlertType.INFORMATION, "Something happend"){
+                                        style{
+                                            backgroundColor += Color.POWDERBLUE
+                                            font = Font.font("Verdana")
+                                            fontSize = 24.px
+                                            textFill = Color.SIENNA
+                                        }
+                                    }
                                 }
-
-                            }
+                                cl.refreshFromModel()
                         }
                     }
                     button("Close"){

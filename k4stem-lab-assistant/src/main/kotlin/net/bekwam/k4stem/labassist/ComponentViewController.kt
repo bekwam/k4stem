@@ -35,7 +35,7 @@ class ComponentViewController : Controller(){
         nameInput.value = null
         descInput.value = null
         sourceInput.value = null
-        cpInput.value = null
+        cpInput.value = ComponentType.UNSPECIFIED
         numInput.value = 0
         editingPrice.value = "0.0"
         mnInput.value = null

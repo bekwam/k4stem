@@ -3,6 +3,7 @@ package net.bekwam.k4stem.labassist
 import javafx.geometry.Insets
 import javafx.scene.control.Alert
 import javafx.scene.paint.Color
+import javafx.scene.text.Font
 import tornadofx.*
 
 class AddSubtractButtonView : Fragment(){
@@ -14,12 +15,12 @@ class AddSubtractButtonView : Fragment(){
                 if(ctrl.lab.value!=null) {
                     CVctrl.itemFlag.set(false)
                     CVctrl.resetInputs()
-                    find<ComponentView>(params= mapOf("a" to "b")).openWindow()
+                    find<ComponentView>().openWindow()
                 }
                 else{
                     alert(Alert.AlertType.INFORMATION,"No Inventory Open")
+                    }
                 }
-            }
             style{
                 backgroundColor = multi(Color.LIGHTGOLDENRODYELLOW)
             }

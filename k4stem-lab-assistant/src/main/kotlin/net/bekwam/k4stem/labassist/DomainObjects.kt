@@ -7,6 +7,9 @@ import com.beust.klaxon.KlaxonException
 import javafx.beans.property.*
 import javafx.scene.control.Alert
 import javafx.scene.control.TableView
+import javafx.scene.input.Clipboard
+import javafx.scene.paint.Color
+import javafx.scene.text.Font
 import javafx.stage.FileChooser
 import java.math.BigDecimal
 import java.time.ZonedDateTime
@@ -26,13 +29,13 @@ class Inventory @JvmOverloads constructor(
 annotation class LabAssistantDefaultDate
 
 data class Component @JvmOverloads constructor(
-        val name : String,
-        val description : String,
-        val source : String,
+        val name : String = "Unspecified",
+        val description : String= "Unspecified",
+        val source : String= "Unspecified",
         val componentType : ComponentType = ComponentType.UNSPECIFIED,
         var numOnHand : Int,
         @LabAssistantDefaultPrice val price : BigDecimal,
-        val modelNumber : String,
+        val modelNumber : String= "Unspecified",
         val valueComp : Double){
     val nameProp = SimpleStringProperty(name)
     val descProp = SimpleStringProperty(description)

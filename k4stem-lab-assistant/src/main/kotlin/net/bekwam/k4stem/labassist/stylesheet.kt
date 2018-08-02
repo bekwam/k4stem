@@ -44,8 +44,11 @@ class Styles : Stylesheet() {
 
                     and(odd) {
                         backgroundColor += Color.BURLYWOOD
-                        and (hover) {
+                        and(hover) {
                             backgroundColor += Color.PALEVIOLETRED
+                        }
+                        and(selected) {
+                            backgroundColor += Color.ALICEBLUE
                         }
                     }
                     and (even){
@@ -53,6 +56,10 @@ class Styles : Stylesheet() {
                         and (hover) {
                             backgroundColor += Color.PALEVIOLETRED
                         }
+                        and(selected){
+                            backgroundColor += Color.ALICEBLUE
+                        }
+
                     }
 
 
@@ -105,6 +112,12 @@ class Styles : Stylesheet() {
             font = Font.font("Verdana")
             textFill = Color.SIENNA
             fontSize = 32.0.px
+        }
+        alert{
+            backgroundColor += Color.POWDERBLUE
+            font = Font.font("Verdana")
+            fontSize = 24.px
+            textFill = Color.SIENNA
         }
 
 

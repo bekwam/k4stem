@@ -30,6 +30,7 @@ class MainView : View("K4Stem Lab Assistant") {
 
 
 
+
     override val root = vbox {
         addClass(Styles.normalStyle)
         add( find<MenuFragment>() )

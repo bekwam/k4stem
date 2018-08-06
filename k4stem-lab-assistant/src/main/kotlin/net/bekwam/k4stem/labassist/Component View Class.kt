@@ -18,7 +18,7 @@ class ComponentView : View() {
         form {
             fieldset("Add Component Form:") {
                 hbox {
-                    field("Name:") { textfield(ctrl.nameInput) }
+                    field("Name*:") { textfield(ctrl.nameInput) }
                     padding = insets(10)
                     spacing = 10.0
                 }
@@ -82,45 +82,56 @@ class ComponentView : View() {
                 hbox{
                     button("Save"){
                         action {
-                                ctrl.newComp = (Component(
-                                        if(ctrl.nameInput.value != null){ctrl.nameInput.value} else{"Unspecified"},
-                                       if(ctrl.descInput.value!= null){ctrl.descInput.value}else{"Unspecified"},
-                                        if(ctrl.sourceInput.value != null){ctrl.sourceInput.value}else{"Unspecified"} ,
-                                        if(ctrl.cpInput.value != null){ctrl.cpInput.value} else{ComponentType.UNSPECIFIED},
-                                        ctrl.numInput.value,
-                                        ctrl.editingPrice.value.toBigDecimal(),
-                                        if(ctrl.mnInput.value!=null){ctrl.mnInput.value}else{"Unspecified"},
-                                        ctrl.valInput.value
-                                )
+                            if(ctrl.nameInput.value != null){
+                            ctrl.newComp = (Component(
+                                    ctrl.nameInput.value,
+                                    if (ctrl.descInput.value != null) {
+                                        ctrl.descInput.value
+                                    } else {
+                                        "Unspecified"
+                                    },
+                                    if (ctrl.sourceInput.value != null) {
+                                        ctrl.sourceInput.value
+                                    } else {
+                                        "Unspecified"
+                                    },
+                                    if (ctrl.cpInput.value != null) {
+                                        ctrl.cpInput.value
+                                    } else {
+                                        ComponentType.UNSPECIFIED
+                                    },
+                                    ctrl.numInput.value,
+                                    ctrl.editingPrice.value.toBigDecimal(),
+                                    if (ctrl.mnInput.value != null) {
+                                        ctrl.mnInput.value
+                                    } else {
+                                        "Unspecified"
+                                    },
+                                    ctrl.valInput.value
+                            )
 
-                                        )
-                                if (ctrl.compctrl.lab.value != null) {
-                                    if (ctrl.itemFlag.value == false) {
-                                        ctrl.compctrl.lab.value.inventory[0].components.add(ctrl.newComp!!)
-                                        ctrl.resetInputs()
-                                        modalStage!!.close()
-                                    } else if (ctrl.itemFlag.value) {
-                                        if (ctrl.indOfC != null) {
-                                            ctrl.compctrl.lab!!.value.inventory[0].components[ctrl.indOfC!!] = ctrl.newComp!!
-                                            ctrl.resetInputs()
-                                            modalStage!!.close()
-                                        }
-                                    }
-                                } else if (ctrl.compctrl.lab.value == null && AddLabView().newLab != null) {
-                                    AddLabView().newLab!!.inventory[0].components.add(ctrl.newComp!!)
+                                    )
+                            if (ctrl.compctrl.lab.value != null) {
+                                if (ctrl.itemFlag.value == false) {
+                                    ctrl.compctrl.lab.value.inventory[0].components.add(ctrl.newComp!!)
                                     ctrl.resetInputs()
                                     modalStage!!.close()
-                                } else {
-                                    alert(Alert.AlertType.INFORMATION, "Something happend"){
-                                        style{
-                                            backgroundColor += Color.POWDERBLUE
-                                            font = Font.font("Verdana")
-                                            fontSize = 24.px
-                                            textFill = Color.SIENNA
-                                        }
+                                } else if (ctrl.itemFlag.value) {
+                                    if (ctrl.indOfC != null) {
+                                        ctrl.compctrl.lab!!.value.inventory[0].components[ctrl.indOfC!!] = ctrl.newComp!!
+                                        ctrl.resetInputs()
+                                        modalStage!!.close()
                                     }
                                 }
-                                cl.refreshFromModel()
+                            } else if (ctrl.compctrl.lab.value == null && AddLabView().newLab != null) {
+                                AddLabView().newLab!!.inventory[0].components.add(ctrl.newComp!!)
+                                ctrl.resetInputs()
+                                modalStage!!.close()
+                            } else {
+                                alert(Alert.AlertType.INFORMATION, "Something happend")
+                            }
+                            cl.refreshFromModel()
+                        }
                         }
                     }
                     button("Close"){
@@ -133,6 +144,9 @@ class ComponentView : View() {
                     spacing =10.0
                 }
                 padding = insets(20)
+            }
+            vbox{
+                label("* denotes a required field")
             }
         }
         style{

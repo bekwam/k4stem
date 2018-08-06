@@ -36,10 +36,31 @@ class MenuFragment : Fragment() {
                     val fl = ctrl.fileSelection()
                     ctrl.file.value = fl[0]
                     val f = ctrl.file.value
+                    fun addOpenRecent(f : File) {
+                        val tempList = app.config["recentFiles"] as MutableList<File>
+                        if (tempList.isNotEmpty()) {
+                            ctrl.OpenRecent = app.config["recentFiles"] as MutableList<File>
+                            if (ctrl.OpenRecent.contains(f)) {
+                                val indexF = ctrl.OpenRecent.indexOf(f)
+                                ctrl.OpenRecent.removeAt(indexF)
+                            }
+                            if (ctrl.OpenRecent.size < 10) {
+                                    ctrl.OpenRecent.add(0, f)
+                                } else {
+                                    ctrl.OpenRecent.add(0, f)
+                                    ctrl.OpenRecent.removeAt(10)
+                                }
+                        }
+                        else{
+                            ctrl.OpenRecent = mutableListOf(f)
+                        }
+                        app.config["recentFiles"] = ctrl.OpenRecent
+                    }
                     runAsync {
                         updateMessage("Loading Components...")
                         updateProgress(0.4, 1.0)
-                       var f2 = ctrl.readFile(f)
+                        addOpenRecent(f)
+                       val f2 = ctrl.readFile(f)
                         ctrl.parse(f2)
                     } ui {
                         ctrl.dirtyFlag.value = true
@@ -54,15 +75,15 @@ class MenuFragment : Fragment() {
                            }
                        }
                     }
-
+                    println( app.config["recentFiles"] )
+                    println(ctrl.OpenRecent)
                 }
             }
 
 
             menu("Open Recent") {
                 action{
-                    val aaa = FileChooser()
-                    aaa.showOpenDialog(primaryStage)
+
                 }
             }
 
@@ -73,7 +94,9 @@ class MenuFragment : Fragment() {
                     ctrl.dirtyFlag.set(false)
 
                     title = "K4Stem Lab Assistant"
+                    ctrl.itemsList.clear()
                     ctrl.lab.value = null
+
                 }
             }
             separator()

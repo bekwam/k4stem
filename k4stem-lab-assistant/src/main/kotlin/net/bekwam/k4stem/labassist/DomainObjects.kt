@@ -54,6 +54,8 @@ class ComponentController : Controller() {
     var file = SimpleObjectProperty<File>(null)
     val keywords = SimpleStringProperty()
     var tblItems: TableView<Component> by singleAssign()
+    var OpenRecent = mutableListOf<File>()
+
     val api : Rest by inject()
 
     fun delete(c: Component) {
@@ -148,4 +150,3 @@ val bdConverter = object: Converter {
     override fun toJson(value: Any) :String
             = """{"price" : "$value"}"""
 }
-//add plus button between seperator and table which brings up add component form

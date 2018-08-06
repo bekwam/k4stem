@@ -36,7 +36,7 @@ class MenuFragment : Fragment() {
                     val fl = ctrl.fileSelection()
                     ctrl.file.value = fl[0]
                     val f = ctrl.file.value
-                    fun addOpenRecent(f : File) {
+                   /* fun addOpenRecent(f : File) {
                         val tempList = app.config["recentFiles"] as MutableList<File>
                         if (tempList.isNotEmpty()) {
                             ctrl.OpenRecent = app.config["recentFiles"] as MutableList<File>
@@ -55,11 +55,11 @@ class MenuFragment : Fragment() {
                             ctrl.OpenRecent = mutableListOf(f)
                         }
                         app.config["recentFiles"] = ctrl.OpenRecent
-                    }
+                    }*/
                     runAsync {
                         updateMessage("Loading Components...")
                         updateProgress(0.4, 1.0)
-                        addOpenRecent(f)
+                       // addOpenRecent(f)
                        val f2 = ctrl.readFile(f)
                         ctrl.parse(f2)
                     } ui {

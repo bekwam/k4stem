@@ -33,7 +33,7 @@ class ComponentView : View() {
                     spacing = 10.0
                 }
                 hbox {
-                    field("Component Type:") { combobox(property = ctrl.cpInput, values = observableList(ComponentType.RESISTOR, ComponentType.CAPACITOR, ComponentType.IC, ComponentType.POTENTIOMETER, ComponentType.INDUCTOR, ComponentType.UNSPECIFIED, ComponentType.TRANSISTOR))}
+                    field("Component Type*:") { combobox(property = ctrl.cpInput, values = observableList(ComponentType.RESISTOR, ComponentType.CAPACITOR, ComponentType.IC, ComponentType.POTENTIOMETER, ComponentType.INDUCTOR, ComponentType.UNSPECIFIED, ComponentType.TRANSISTOR))}
                     padding = insets(10)
                     spacing = 10.0
                 }
@@ -44,8 +44,6 @@ class ComponentView : View() {
                                 it.controlNewText.isInt()
                             }
                         }
-
-
                     }
                     padding = insets(10)
                     spacing = 10.0
@@ -68,12 +66,13 @@ class ComponentView : View() {
                     spacing = 10.0
                 }
                 hbox {
-                    field("Value:") { textfield(ctrl.valInput)
-                    {
-                        filterInput {
-                            it.controlNewText.isDouble()
+                    field("Value:") {
+                        textfield(ctrl.valInput)
+                        {
+                            filterInput {
+                                it.controlNewText.isDouble()
+                            }
                         }
-                    }
                     }
                     padding = insets(10)
                     spacing = 10.0
@@ -88,12 +87,12 @@ class ComponentView : View() {
                                     if (ctrl.descInput.value != null) {
                                         ctrl.descInput.value
                                     } else {
-                                        "Unspecified"
+                                        ""
                                     },
                                     if (ctrl.sourceInput.value != null) {
                                         ctrl.sourceInput.value
                                     } else {
-                                        "Unspecified"
+                                        ""
                                     },
                                     if (ctrl.cpInput.value != null) {
                                         ctrl.cpInput.value
@@ -105,7 +104,7 @@ class ComponentView : View() {
                                     if (ctrl.mnInput.value != null) {
                                         ctrl.mnInput.value
                                     } else {
-                                        "Unspecified"
+                                        ""
                                     },
                                     ctrl.valInput.value
                             )
@@ -118,7 +117,7 @@ class ComponentView : View() {
                                     modalStage!!.close()
                                 } else if (ctrl.itemFlag.value) {
                                     if (ctrl.indOfC != null) {
-                                        ctrl.compctrl.lab!!.value.inventory[0].components[ctrl.indOfC!!] = ctrl.newComp!!
+                                        ctrl.compctrl.lab.value.inventory[0].components[ctrl.indOfC!!] = ctrl.newComp!!
                                         ctrl.resetInputs()
                                         modalStage!!.close()
                                     }

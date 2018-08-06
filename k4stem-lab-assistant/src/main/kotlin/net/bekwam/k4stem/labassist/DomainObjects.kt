@@ -1,9 +1,6 @@
 package net.bekwam.k4stem.labassist
 
-import com.beust.klaxon.Converter
-import com.beust.klaxon.JsonValue
-import com.beust.klaxon.Klaxon
-import com.beust.klaxon.KlaxonException
+import com.beust.klaxon.*
 import javafx.beans.property.*
 import javafx.scene.control.Alert
 import javafx.scene.control.TableView
@@ -37,13 +34,21 @@ data class Component @JvmOverloads constructor(
         @LabAssistantDefaultPrice val price : BigDecimal,
         val modelNumber : String= "Unspecified",
         val valueComp : Double){
+    @Json(ignored = true)
     val nameProp = SimpleStringProperty(name)
+    @Json(ignored=true)
     val descProp = SimpleStringProperty(description)
+    @Json(ignored=true)
     val sourceProp = SimpleStringProperty(source)
+    @Json(ignored=true)
     val compProp = SimpleObjectProperty<ComponentType>(componentType)
+    @Json(ignored=true)
     val numProp = SimpleIntegerProperty(numOnHand)
+    @Json(ignored=true)
     val priceProp = SimpleObjectProperty<BigDecimal>(price)
+    @Json(ignored=true)
     val mnProp = SimpleStringProperty(modelNumber)
+    @Json(ignored=true)
     val valueProp = SimpleDoubleProperty(valueComp)
 }
 

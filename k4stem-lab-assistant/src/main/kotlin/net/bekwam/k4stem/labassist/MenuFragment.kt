@@ -3,6 +3,7 @@ package net.bekwam.k4stem.labassist
 import com.beust.klaxon.Klaxon
 import javafx.application.Platform
 import javafx.scene.control.Alert
+import javafx.scene.control.TextField
 import javafx.scene.input.Clipboard
 import javafx.scene.input.ClipboardContent
 import javafx.scene.paint.Color
@@ -136,39 +137,43 @@ class MenuFragment : Fragment() {
 
 
                     menu("Edit") {
-                        val clipboard = Clipboard.getSystemClipboard()
-                        val content = ClipboardContent()
                         item("Cut") {
-                            fun cut() {
-                                if (ctrl.tblItems.selectedItem != null) {
-                                    val text = ctrl.tblItems.selectedItem.toString()
-                                    content.putString(text)
-                                    clipboard.setContent(content)
-                                    ctrl.delete(ctrl.tblItems.selectedItem!!)
+                            action {
+                                //
+                                // who has focus? for now, just honoring TextFields
+                                // like the Keyboards TextField
+                                //
+                                // * The copy menuItem is not available to the details
+                                // panel
+                                //
+                                if( scene != null ) {
+                                    val focusedNode = scene!!.focusOwner
+                                    if( focusedNode is TextField) {
+                                        focusedNode.cut()
+                                    }
                                 }
                             }
-                            action {
-                                cut()
-                            }
-
-
                         }
                         item("Copy") {
-                            fun copy() {
-                                if (ctrl.tblItems.selectedItem != null) {
-                                    val text = ctrl.tblItems.selectedItem.toString()
-                                    content.putString(text)
-                                    clipboard.setContent(content)
-                                    println(text)
-                                }
-                            }
                             action {
-                                copy()
+                                if( scene != null ) {
+                                    val focusedNode = scene!!.focusOwner
+                                    if( focusedNode is TextField) {
+                                        focusedNode.copy()
+                                    }
+                                }
                             }
 
                         }
                         item("Paste") {
-
+                            action {
+                                if (scene != null) {
+                                    val focusedNode = scene!!.focusOwner
+                                    if (focusedNode is TextField) {
+                                        focusedNode.paste()
+                                    }
+                                }
+                            }
                         }
                     }
                     menu("View")

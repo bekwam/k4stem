@@ -2,6 +2,7 @@ package net.bekwam.k4stem.labassist
 import javafx.geometry.Insets
 import javafx.scene.layout.BorderStrokeStyle
 import javafx.scene.paint.Color
+import javafx.scene.paint.Color.rgb
 import javafx.scene.paint.Paint
 import javafx.scene.shape.StrokeLineCap
 import javafx.scene.shape.StrokeType
@@ -11,39 +12,65 @@ import java.awt.geom.RoundRectangle2D
 
 class Styles : Stylesheet() {
     companion object {
-        val hoverColor by cssclass()
+
         val normalStyle by cssclass()
         val searchBarLabel by cssclass()
+
+        val c1 = Color.web("#50F205")
+        val c2 = Color.web("F2E205")
+        val backColor = Color.web("#26261e")
+        val oddCellColor = Color.web("#049dbf")
+        val evenCellColor = Color.web("#f6f8f9")
     }
 
     init {
         normalStyle {
             menuBar{
-                backgroundColor += Color.ALICEBLUE
+                backgroundColor += backColor
                 font = Font.font("Verdana")
                 label{
-                    textFill = Color.SIENNA
+                    textFill = c1
+                    and(hover){
+                        backgroundColor+= oddCellColor
+                    }
                 }
+                menu{
+                    and(hover){
+                        backgroundColor+= oddCellColor
+                    }
+
+                    menuItem{
+                        and(hover){
+                            backgroundColor+= oddCellColor
+                        }
+                        backgroundColor += evenCellColor
+                    }
+                }
+                and(selected){
+                    backgroundColor+= oddCellColor
+                }
+
+
             }
             tableView {
                 tableColumn {
                     label {
                         fontSize = 24.px
-                        textFill = Color.IVORY
-                        backgroundColor += Color.BURLYWOOD
-                        borderColor += box(Color.SIENNA)
+                        textFill = evenCellColor
+                        backgroundColor += oddCellColor
+                        borderColor += box(backColor)
                     }
                 }
                 tableCell {
-                    borderColor += box(Color.SIENNA)
-                    textFill = Color.SIENNA
+                    borderColor += box(backColor)
+                    textFill = backColor
                     font = Font.font("Verdana")
 
                 }
                 tableRowCell {
 
                     and(odd) {
-                        backgroundColor += Color.BURLYWOOD
+                        backgroundColor += oddCellColor
                         and(hover) {
                             backgroundColor += Color.PALEVIOLETRED
                         }
@@ -52,7 +79,7 @@ class Styles : Stylesheet() {
                         }
                     }
                     and (even){
-                        backgroundColor += Color.IVORY
+                        backgroundColor += evenCellColor
                         and (hover) {
                             backgroundColor += Color.PALEVIOLETRED
                         }
@@ -68,43 +95,43 @@ class Styles : Stylesheet() {
                 fixedCellSize = 48.px
                 fontSize = 24.px
                 font = Font.font("Verdana")
-                backgroundColor += Color.IVORY
+                backgroundColor += evenCellColor
             }
             button {
-                backgroundColor += Color.LIGHTGOLDENRODYELLOW
-                textFill = Color.SIENNA
+                backgroundColor += evenCellColor
+                textFill = backColor
                 font = Font.font("Verdana")
             }
             textField {
-                backgroundColor += Color.IVORY
-                borderColor += box(Color.SIENNA)
+                backgroundColor += evenCellColor
+                borderColor += box(backColor)
                 font = Font.font("Verdana")
             }
 
             checkBox{
-                textFill = Color.SIENNA
+                textFill = c1
                 fontSize = 16.0.px
                 font = Font.font("Verdana")
                 box{
-                    backgroundColor += Color.ALICEBLUE
+                    backgroundColor += evenCellColor
 
                 }
             }
             comboBox{
-                backgroundColor += Color.IVORY
+                backgroundColor += evenCellColor
                 font = Font.font("Verdana")
-                borderColor += box(Color.SIENNA)
+                borderColor += box(c1)
                 cell{
-                    backgroundColor += Color.IVORY
-                    textFill = Color.SIENNA
-                    borderColor += box(Color.SIENNA)
+                    backgroundColor += evenCellColor
+                    textFill = c1
+                    borderColor += box(backColor)
                     and(hover){
                         backgroundColor += Color.PALEVIOLETRED
                     }
                 }
             }
             label{
-                textFill = Color.SIENNA
+                textFill = c1
             }
 
         }
@@ -113,12 +140,7 @@ class Styles : Stylesheet() {
             textFill = Color.SIENNA
             fontSize = 32.0.px
         }
-        alert{
-            backgroundColor += Color.POWDERBLUE
-            font = Font.font("Verdana")
-            fontSize = 24.px
-            textFill = Color.SIENNA
-        }
+
 
 
     }

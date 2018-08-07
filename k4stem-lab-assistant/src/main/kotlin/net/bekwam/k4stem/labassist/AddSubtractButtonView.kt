@@ -22,7 +22,7 @@ class AddSubtractButtonView : Fragment(){
                     }
                 }
             style{
-                backgroundColor = multi(Color.LIGHTGOLDENRODYELLOW)
+                backgroundColor += Styles.evenCellColor
             }
         }
         button("-"){
@@ -34,7 +34,7 @@ class AddSubtractButtonView : Fragment(){
                 }
             }
             style{
-                backgroundColor = multi(Color.LIGHTGOLDENRODYELLOW)
+                backgroundColor += Styles.evenCellColor
             }
         }
         spacing = 10.0

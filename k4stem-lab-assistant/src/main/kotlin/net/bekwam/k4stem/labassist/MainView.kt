@@ -112,7 +112,7 @@ class MainView : View("K4Stem Lab Assistant") {
 
         }
         style{
-            backgroundColor += Color.POWDERBLUE
+            backgroundColor += Styles.backColor
         }
     }
 

@@ -26,13 +26,13 @@ class Inventory @JvmOverloads constructor(
 annotation class LabAssistantDefaultDate
 
 data class Component @JvmOverloads constructor(
-        val name : String = "Unspecified",
-        val description : String= "Unspecified",
-        val source : String= "Unspecified",
+        val name : String,
+        val description : String= "",
+        val source : String= "",
         val componentType : ComponentType = ComponentType.UNSPECIFIED,
         var numOnHand : Int,
         @LabAssistantDefaultPrice val price : BigDecimal,
-        val modelNumber : String= "Unspecified",
+        val modelNumber : String= "",
         val valueComp : Double){
     @Json(ignored = true)
     val nameProp = SimpleStringProperty(name)
@@ -56,6 +56,7 @@ class ComponentController : Controller() {
     var itemsList = observableList<Component>()
     var lab = SimpleObjectProperty<Lab>()
     val dirtyFlag = SimpleBooleanProperty()
+    val saveAsFlag = SimpleBooleanProperty()
     var file = SimpleObjectProperty<File>(null)
     val keywords = SimpleStringProperty()
     var tblItems: TableView<Component> by singleAssign()
@@ -72,8 +73,8 @@ class ComponentController : Controller() {
     fun refreshFromModel() {
         if (lab.value != null) {
             itemsList.clear()
-            for (inv in lab!!.value.inventory) {
-                for (comp in inv!!.components) {
+            for (inv in lab.value.inventory) {
+                for (comp in inv.components) {
                     itemsList.add(Component(comp.name, comp.description, comp.source, comp.componentType, comp.numOnHand, comp.price, comp.modelNumber, comp.valueComp))
                 }
             }
@@ -108,6 +109,33 @@ class ComponentController : Controller() {
         }
         else{
             lab.value = null
+        }
+    }
+
+    fun saveAs(){
+        if (file.value != null) {
+            val fc = FileChooser()
+            val newFileJsonString = Klaxon()
+                    .fieldConverter(LabAssistantDefaultDate::class, zdtConverter)
+                    .fieldConverter(LabAssistantDefaultPrice::class, bdConverter)
+                    .toJsonString(lab.value)
+            val extFilt = FileChooser.ExtensionFilter("json", "*.json")
+            fc.extensionFilters.add(extFilt)
+            fc.showSaveDialog(primaryStage).writeText(newFileJsonString)
+            dirtyFlag.set(false)
+        }
+    }
+
+    fun save(){
+        if (lab.value != null) {
+            if (file.value != null) {
+                val newFile = Klaxon()
+                        .fieldConverter(LabAssistantDefaultDate::class, zdtConverter)
+                        .fieldConverter(LabAssistantDefaultPrice::class, bdConverter)
+                        .toJsonString(lab.value)
+                file.value!!.writeText(newFile)
+                dirtyFlag.set(false)
+            }
         }
     }
 

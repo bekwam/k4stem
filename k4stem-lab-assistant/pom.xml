@@ -25,7 +25,7 @@
     </dependencies>
 
     <properties>
-        <tornadofx.version>1.7.16</tornadofx.version>
+        <tornadofx.version>1.7.17</tornadofx.version>
         <klaxon.version>3.0.1</klaxon.version>
     </properties>
 

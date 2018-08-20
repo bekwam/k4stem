@@ -27,6 +27,7 @@
         <module>k4stem-language-warmups</module>
         <module>k4stem-electricity</module>
         <module>k4stem-lab-assistant</module>
+        <module>k4stem-calculator</module>
     </modules>
 
     <build>

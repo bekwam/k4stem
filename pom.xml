@@ -28,6 +28,7 @@
         <module>k4stem-electricity</module>
         <module>k4stem-lab-assistant</module>
         <module>k4stem-calculator</module>
+        <module>k4stem-science</module>
     </modules>
 
     <build>
